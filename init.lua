@@ -8,11 +8,10 @@ minetest.register_node("grasspaths:grasspath", {
     },
     is_ground_content = true,
     groups = {crumbly=3},
-    drops= "default:dirt",
+    drop = "default:dirt",
     
-    on_rightclick = function(pos, node, player, itemstack, pointed_thing)
-        --TODO
-    end
+--    on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+--    end
 
 })
 
@@ -42,17 +41,27 @@ minetest.register_node("grasspaths:rake", {
         breaks = "default_tool_breaks"
     },
     on_place = function(itemstack, placer, pointed_thing)
-        local itemName = itemstack:get_name()
+        local pointedThing = pointed_thing
+        if not pointedThing or pointedThing.type ~= "node" then
+            return
+        end
+
+        local underNode = minetest.get_node(pointedThing.under)
+        minetest.set_node(pointedThing.under, {name = "grasspaths:grasspath"})
+
+        local wear = 1
+        itemstack:add_wear(wear)
+
+        return itemstack
+
     end
 })
 
 minetest.register_craft({
     output = "grasspaths:rake",
     recipe = {
+        {"", "default:stick", ""},
+        {"", "default:stick", ""},
         {"default:tin_ingot", "default:tin_ingot", "default:tin_ingot"},
-        {"", "default:stick", ""},
-        {"", "default:stick", ""},
     }
 })
-
-
