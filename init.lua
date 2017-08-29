@@ -47,10 +47,13 @@ minetest.register_node("grasspaths:rake", {
         end
 
         local underNode = minetest.get_node(pointedThing.under)
-        minetest.set_node(pointedThing.under, {name = "grasspaths:grasspath"})
+        local pointedName = underNode.name
+        if pointedName == "default:dirt" or pointedName == "default:dirt_with_grass" then
+            minetest.set_node(pointedThing.under, {name = "grasspaths:grasspath"})
 
-        local wear = 1
-        itemstack:add_wear(wear)
+            local wear = 1
+            itemstack:add_wear(wear)
+        end
 
         return itemstack
 
