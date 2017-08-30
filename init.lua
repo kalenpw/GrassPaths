@@ -4,18 +4,13 @@ minetest.register_node("grasspaths:grasspath", {
         "grasspaths_grasspath_top.png",
         "grasspaths_grasspath_bottom.png",
         "grasspaths_grasspath_side.png",
-
     },
     is_ground_content = true,
     groups = {crumbly=3},
     drop = "default:dirt",
-    
---    on_rightclick = function(pos, node, player, itemstack, pointed_thing)
---    end
-
 })
 
-minetest.register_node("grasspaths:rake", {
+minetest.register_tool("grasspaths:rake", {
     description = "Rake",
     inventory_image = "grasspaths_rake.png",
     wield_image = "grasspaths_rake.png^[transformR180",
@@ -40,7 +35,7 @@ minetest.register_node("grasspaths:rake", {
     sound = {
         breaks = "default_tool_breaks"
     },
-    on_place = function(itemstack, placer, pointed_thing)
+    on_use = function(itemstack, placer, pointed_thing)
         local pointedThing = pointed_thing
         if not pointedThing or pointedThing.type ~= "node" then
             return
@@ -51,7 +46,7 @@ minetest.register_node("grasspaths:rake", {
         if pointedName == "default:dirt" or pointedName == "default:dirt_with_grass" then
             minetest.set_node(pointedThing.under, {name = "grasspaths:grasspath"})
 
-            local wear = 1
+            local wear = 420--kek
             itemstack:add_wear(wear)
         end
 
